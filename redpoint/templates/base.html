@@ -1,0 +1,71 @@
+{% load static %}
+{% get_static_prefix as STATIC_PREFIX %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>住房管理</title>
+    <link href="{{STATIC_PREFIX}}css/Photobooth.css" rel="stylesheet">
+    <link href="{{STATIC_PREFIX}}css/page.css" rel="stylesheet">
+    <link href="{{STATIC_PREFIX}}bootstrap-3.2.0-dist/css/bootstrap.css" rel="stylesheet">
+    <link href="{{STATIC_PREFIX}}bootstrap-3.2.0-dist/css/dashboard.css" rel="stylesheet">
+    
+    <script src="{{STATIC_PREFIX}}jquery/jquery.js"></script>
+    <script src="{{STATIC_PREFIX}}js/photobooth_min.js"></script>
+    <script src="{{STATIC_PREFIX}}bootstrap-3.2.0-dist/js/bootstrap.js"></script>
+
+    <style type="text/css">
+        .nav-sidebar > .active > a:hover{background-color:#3276b1}
+        .snav li{padding-left:15px;}
+        .snav li a{font-size:12px;}
+    </style>
+</head>
+
+<body >
+    <!-- 固定头 -->
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">住房管理</a>
+            </div>
+            <div class="navbar-collapse collapse">
+              <ul class="nav navbar-nav navbar-right">
+                {%if user.is_staff%}
+                <li><a href="/admin">系统设置</a></li>
+                {%endif%}
+                <li><a href="#">当前用户：{{USER_NAME}}</a></li>
+                <li><a href="#">上次登录时间：{{user.last_login|date:"Y-m-d H:i"}}</a></li>    
+                <li><a href="#">退出</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+    <div class="container-fluid">
+          <div class="row">
+                <!-- 边栏 -->
+                <div class="col-sm-3 col-md-1 sidebar">
+                  <ul class="nav nav-sidebar">
+                    <li class={{home_active}}><a href="{%url 'home'%}">概述</a></li>
+                  </ul>
+                </div>
+                <!-- 主要内容 -->
+                <div class="col-sm-9 col-sm-offset-3 col-md-11 col-md-offset-1 main">
+                {% block mod_content%}
+                
+                {%endblock%}
+                </div>  
+            </div>
+    </div>
+    {%block jsset %}
+    {%endblock%}
+    {{foot_mod}}
+    </body>
+
+</html>

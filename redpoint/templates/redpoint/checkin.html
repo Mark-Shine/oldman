@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+{% crispy CheckInForm CheckInForm.helper %}
+
+{%block mod_content%}
+<div class="row ">
+  <h3 class="page-header">入住登记</h3>
+  <div class="col-lg-6">
+    <div id="example" style="height: 300px;"></div>
+    <hr>
+    {% crispy form %}
+  </div>
+  <div class="col-lg-6">
+    <div id="gallery"></div>    
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  $('#example').photobooth().on("image",function( event, dataUrl ){
+  $( "#gallery" ).html( '<img src="' + dataUrl + '" >');
+  $( "#id-checkinForm" ).append( 
+    '<input class="hidden" name="avatar" value="' + dataUrl + '" >');
+});
+</script>
+
+{%endblock%}
