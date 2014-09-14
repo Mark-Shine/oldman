@@ -13,10 +13,22 @@ from redpoint.models import Oldman
 
 # CheckInForm = modelform_factory(Oldman, fields=('name', 'avatar'))
 
-class CheckInForm(forms.ModelForm):
-    class Meta:
-        model = Oldman
-        fields = ("name",)
+class CheckInForm(forms.Form):
+    name = forms.CharField(
+        label=u"姓名",
+        required=False,)
+    bed = forms.IntegerField(
+        required=False,
+        widget=forms.HiddenInput(),
+        )    
+    room = forms.IntegerField(
+        required=False,
+        widget=forms.HiddenInput(),
+        )    
+
+        # class Meta:
+    #     model = Oldman
+    #     fields = ("name",)
 
     def __init__(self, *args, **kwargs):
         super(CheckInForm, self).__init__(*args, **kwargs)

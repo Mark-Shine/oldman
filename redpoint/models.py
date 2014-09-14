@@ -9,11 +9,17 @@ class Room(models.Model):
     floor = models.IntegerField(null=True, blank=True,)
     room_number = models.IntegerField(null=True, blank=True,)
 
+    def __str__(self, ):
+      return u"%s" % self.room_number
+
 
 class Bed(models.Model):
     room = models.ForeignKey("Room", null=True, blank=True) 
     who = models.ForeignKey("Oldman", null=True, blank=True)
+    number = models.IntegerField(null=True, blank=True,)
 
+    def __str__(self, ):
+        return u"%s-%s" % (self.room, self.number)
 
 
 class Oldman(models.Model):
@@ -26,5 +32,5 @@ class Oldman(models.Model):
                                       format='JPEG',
                                       options={'quality': 60}, )
 
-    def __unicode__(self, ):
-        return self.name
+    def __str__(self, ):
+        return u"%s" % self.name

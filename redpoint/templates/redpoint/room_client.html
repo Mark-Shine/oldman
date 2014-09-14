@@ -1,0 +1,38 @@
+{% extends 'client_base.html'%}
+
+{% block mod_content%}
+    {%for o in objects.values%}
+
+        <div class="col-sm-3"> 
+            <h5>床位 {{o.number}}</h5>
+            <div class="thumbnail">
+              {%if not o.who %}
+              <img  src="/media/avatars/photoprofile.png" >
+              {%else%}
+              <img  alt="..." src="  {{o.who.avatar.url}}" >
+              <div class="caption">
+                  <p>{{o.who.name}}</p>
+              </div>
+              {%endif%}
+            </div>
+              
+        </div>
+
+<script type="text/javascript">
+    /*第一次读取最新通知*/
+    setTimeout(function() {
+             Push();},
+        3000);
+      /*30轮询读取函数*/
+    setInterval(function() {
+            Push();}, 
+            30000);
+
+/*请求函数的ajax*/
+
+function Push() {
+    location.reload()
+}
+</script>
+{%endfor%}
+{%endblock%}

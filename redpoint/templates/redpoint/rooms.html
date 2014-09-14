@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{%block mod_content%}
+<div class="row ">
+  <h3 class="page-header">房间管理</h3>
+  <div class="col-sm-3 col-md-12 ">
+  {%for o in objects%}
+      <div class="col-sm-3 col-md-3 ">
+        <div class="thumbnail">
+          {%if not o.who %}
+          <a href="{%url 'show_checkin'%}?bed={{o.number}}&room={{o.room}}"><span class="glyphicon glyphicon-plus" ></span></a>
+          {%else%}
+          <img  alt="..." src="  {{o.who.avatar.url}}" >
+          {%endif%}
+          <div class="caption">
+          <p>房间号：{{o.room.room_number}}</p>
+          <p>床位号：{{o.number}} </p>
+          </div>
+        </div>
+      </div>
+  {%endfor%}
+  </div>
+</div>
+
+{%endblock%}
