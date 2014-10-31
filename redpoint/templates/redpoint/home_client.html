@@ -5,7 +5,7 @@
     {%for o in objects %}
         <div class="col-md-1 col-sm-1" >
             <div class="thumbnail">
-            <div class="caption"><a href="{%url 'room_client'%}?number={{o.room_number}}">{{o.room_number}}</a></div>
+            <div class="caption"><a href="{%url 'room_client'%}?number={{o.room_number}}&f={{o.floor}}">{{o.floor}}-{{o.room_number}}</a></div>
             </div>
         </div>
     {%endfor%}

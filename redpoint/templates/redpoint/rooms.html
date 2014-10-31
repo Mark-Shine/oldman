@@ -1,24 +1,58 @@
 {% extends 'base.html' %}
 
 {%block mod_content%}
+<style type="text/css">
+  .thumbnail{
+    background-color: rgba(255,255,255,0.7);
+  }
+</style>
 <div class="row ">
-  <h3 class="page-header">房间管理</h3>
+  <h3 class="page-header">床位登记</h3>
+  <ul class="list-inline">
+      <li>剩余床位：{{beds_avilable_counts}}</li>
+      <li>总床位数：{{beds_all_counts}}</li>
+
+  </ul>
+  </div>
+
+  {%for room in rooms%}
+  <div class="row">
   <div class="col-sm-3 col-md-12 ">
-  {%for o in objects%}
+      <h4>房间 {{room.floor}}楼{{room.room_number}}室</h4>
+      {%for bed in room.bed_set.avalible %}
       <div class="col-sm-3 col-md-3 ">
         <div class="thumbnail">
-          {%if not o.who %}
-          <a href="{%url 'show_checkin'%}?bed={{o.number}}&room={{o.room}}"><span class="glyphicon glyphicon-plus" ></span></a>
-          {%else%}
-          <img  alt="..." src="  {{o.who.avatar.url}}" >
-          {%endif%}
+          <a class="center-block" href="{%url 'show_checkin'%}?bed={{bed.number}}&room={{room.id}}"><span class="glyphicon glyphicon-plus " style="font-size: 20px"></span></a>
           <div class="caption">
-          <p>房间号：{{o.room.room_number}}</p>
-          <p>床位号：{{o.number}} </p>
+          <p>床位号：{{bed.number}} </p>
           </div>
         </div>
       </div>
+      {%empty%}
+        <p class="text-center ">暂无空余床位</p>
+      {%endfor%}
+  </div>
+  </div>
   {%endfor%}
+
+<h5 class="page-header">非空余床位</h5>
+  <div class="col-sm-3 col-md-12 ">
+
+   {%for bed in occupyied_beds%}
+      {%if bed.who %}
+      <div class="col-sm-3 col-md-3 ">
+        <div class="thumbnail">
+          <img  alt="..." src="{{bed.who.avatar.url}}" >
+          <div class="caption">
+          <p>房间号：{{bed.room.floor}}-{{bed.room.room_number}}</p>
+          <p>床位号：{{bed.number}} <a style="font-size: 14px"class="pull-right" href="{%url 'checkout'%}?bedid={{bed.id}}">退房</a></p>
+          </div>
+
+        </div>
+      </div>
+    {%endif%}
+  {%endfor%}
+
   </div>
 </div>
 

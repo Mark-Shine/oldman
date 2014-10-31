@@ -1,0 +1,73 @@
+
+      /*#headimage{
+          position: absolute;
+          top: 50%;
+          left: 50%;
+      }*/
+      /*心形头像*/
+      .heart{
+          float:left;
+          width:180px;
+          height:108px;
+          position:relative;
+      }
+      /* after 伪元素在元素之前添加内容*/
+      .heart .before{
+          content:" ";
+          border-radius:320px 320px 0 0;/* 正方形的内切圆的半径等于正方形边长的一半 */
+          -moz-border-radius: 320px 320px 0 0;
+          -ms-border-radius: 320px 320px 0 0;
+          -o-border-radius: 320px 320px 0 0;
+          -webkit-border-radius: 320px 320px 0 0;
+
+          width:120px; height:200px;/* 长方形 */
+          -moz-transform: rotate(-45deg);/* 逆时针旋转45°*/
+          -ms-transform: rotate(-45deg);
+          -o-transform: rotate(-45deg);
+          -webkit-transform: rotate(-45deg);
+          position:absolute;
+          left:-20px;
+          overflow: hidden;
+
+      }
+      .before > div {
+
+          width: 240px;
+          height: 240px;
+          background-size: 240px;
+          position: absolute;
+          bottom: 0px;
+          left: -100%;
+          -webkit-transform: rotate(45deg);
+          -webkit-transform-origin: bottom center;
+      }
+      /* after 伪元素在元素之后添加内容*/
+      .heart .after{
+          content:" ";
+          width:120px; height:200px;
+          border-radius:320px 320px 0 0;
+
+
+          -moz-border-radius:320px 320px 0 0;
+          -ms-border-radius:320px 320px 0 0;
+          -o-border-radius: 320px 320px 0 0;
+          -webkit-border-radius: 320px 320px 0 0;
+          -moz-transform: rotate(45deg);
+          -ms-transform: rotate(45deg);
+          -o-transform: rotate(45deg);
+          -webkit-transform: rotate(45deg);
+          position:absolute;
+          left:38px;top:0px;
+          overflow: hidden;
+      }
+      .after > div {
+
+          width: 240px;
+          height: 240px;
+          background-size: 240px;
+          position: absolute;
+          bottom: 0px;
+          right: -100%;
+          -webkit-transform: rotate(-45deg);
+          -webkit-transform-origin:bottom center;
+      }

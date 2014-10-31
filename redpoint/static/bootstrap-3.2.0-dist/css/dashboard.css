@@ -3,26 +3,10 @@
  */
 
 /* Move down content because we have a fixed navbar that is 50px tall */
-.signin-header {
-  background-color: #3276b1; 
-  padding: 60px
-}
-.signin-header h1 {
-  color:  white;
-}
-body h1{
-  padding-bottom: 10px;
-  padding-left: 300px;
-}
-
 body {
   padding-top: 50px;
 }
 
-.page-header img{
-  float: left;
-
-}
 
 /*
  * Global add-ons
@@ -33,6 +17,13 @@ body {
   border-bottom: 1px solid #eee;
 }
 
+/*
+ * Top navigation
+ * Hide default border to remove 1px line.
+ */
+.navbar-fixed-top {
+  border: 0;
+}
 
 /*
  * Sidebar
@@ -68,7 +59,9 @@ body {
   padding-right: 20px;
   padding-left: 20px;
 }
-.nav-sidebar > .active > a {
+.nav-sidebar > .active > a,
+.nav-sidebar > .active > a:hover,
+.nav-sidebar > .active > a:focus {
   color: #fff;
   background-color: #428bca;
 }

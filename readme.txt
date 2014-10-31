@@ -1,0 +1,1 @@
+pg_ctl -D /Users/pison/Project/pgsql/ -l logfile start

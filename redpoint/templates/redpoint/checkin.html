@@ -4,25 +4,61 @@
 {% crispy CheckInForm CheckInForm.helper %}
 
 {%block mod_content%}
+<link href="{{STATIC_PREFIX}}css/page.css" rel="stylesheet">
+
+<style type="text/css">
+  .pic div{
+    margin-bottom: 10px;
+  }
+  #example {
+    background-color: rgba(255,255,255,0.7);
+  }
+</style>
+
 <div class="row ">
-  <h3 class="page-header">入住登记</h3>
-  <div class="col-lg-6">
+  <h3 class="page-header">信息登录</h3>
+  <div class="col-lg-6 col-md-6">
     <div id="example" style="height: 300px;"></div>
     <hr>
     {% crispy form %}
   </div>
-  <div class="col-lg-6">
-    <div id="gallery"></div>    
+  <div class="col-lg-6 col-md-6 pic">
+      <div class="col-lg-6 col-md-3" id="img-1">
+      </div>
+      <div class="col-lg-6 col-md-3" id="img-2">
+      </div>
+      <div class="col-lg-6 col-md-3" id="img-3">
+      </div>
+    <!-- <div id="gallery"></div>     -->
   </div>
 </div>
 
 
 <script type="text/javascript">
   $('#example').photobooth().on("image",function( event, dataUrl ){
-  $( "#gallery" ).html( '<img src="' + dataUrl + '" >');
-  $( "#id-checkinForm" ).append( 
-    '<input class="hidden" name="avatar" value="' + dataUrl + '" >');
-});
+    $("#id-checkinForm").find('input[name="avatar"]').remove();
+    $( "#img-1" ).html('<img src="' + dataUrl + '" class="img-rounded img-responsive" >');
+    // $( "#img-2" ).html('<img src="' + dataUrl + '" class="img-circle img-responsive" >');
+    // $( "#img-3" ).html('<img src="' + dataUrl + '" class="img-responsive" style="-webkit-mask:url(/media/avatars/cover_heart.png) round round;">');
+
+    $( "#id-checkinForm" ).append( 
+      '<input class="hidden" name="avatar" value="' + dataUrl + '" >');
+  });
+  $('#example .photobooth canvas').after('<div style="position:absolute; left:0; top:10%;border:solid 1px #ddd;width:50%;margin:0 25%;height:80%;"/>');
+  
+  $().ready(function(){
+    $("#id-checkinForm").submit(function () {
+        var name = this.id_name.value;
+        var pic = this.avatar[0].value;
+        if (name.length&&pic.length){
+          return true;
+        } 
+        else {
+          alert('请检查照片和名字是否都已录入');
+          return false; 
+        }
+      }); 
+  });
 </script>
 
 {%endblock%}

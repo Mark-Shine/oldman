@@ -5,20 +5,25 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>住房管理</title>
+    <title>红景天老人公寓住房管理系统</title>
     <link href="{{STATIC_PREFIX}}css/Photobooth.css" rel="stylesheet">
-    <link href="{{STATIC_PREFIX}}css/page.css" rel="stylesheet">
     <link href="{{STATIC_PREFIX}}bootstrap-3.2.0-dist/css/bootstrap.css" rel="stylesheet">
     <link href="{{STATIC_PREFIX}}bootstrap-3.2.0-dist/css/dashboard.css" rel="stylesheet">
     
+    <script src="{{STATIC_PREFIX}}holder.js"></script>
     <script src="{{STATIC_PREFIX}}jquery/jquery.js"></script>
     <script src="{{STATIC_PREFIX}}js/photobooth_min.js"></script>
     <script src="{{STATIC_PREFIX}}bootstrap-3.2.0-dist/js/bootstrap.js"></script>
-
     <style type="text/css">
-        .nav-sidebar > .active > a:hover{background-color:#3276b1}
-        .snav li{padding-left:15px;}
-        .snav li a{font-size:12px;}
+    body {
+      background: url('{{STATIC_PREFIX}}img/admin_bg.jpg') center;
+    }
+    .navbar-inverse {
+      background-color: rgba(2,2,2,0.6);
+    }
+    .sidebar {
+      background-color: rgba(245,245,245,0.6);
+    }
     </style>
 </head>
 
@@ -33,16 +38,11 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="#">住房管理</a>
+              <a class="navbar-brand" href="#">红景天老人公寓住房管理系统</a>
             </div>
             <div class="navbar-collapse collapse">
               <ul class="nav navbar-nav navbar-right">
-                {%if user.is_staff%}
-                <li><a href="/admin">系统设置</a></li>
-                {%endif%}
-                <li><a href="#">当前用户：{{USER_NAME}}</a></li>
-                <li><a href="#">上次登录时间：{{user.last_login|date:"Y-m-d H:i"}}</a></li>    
-                <li><a href="#">退出</a></li>
+                <li><a href="#">上次登录时间：{{user.last_login|date:"Y-m-d H:i"}}</a></li> 
               </ul>
             </div>
           </div>
@@ -50,14 +50,15 @@
     <div class="container-fluid">
           <div class="row">
                 <!-- 边栏 -->
-                <div class="col-sm-3 col-md-1 sidebar">
+                <div class="col-sm-3 col-md-2 sidebar">
                   <ul class="nav nav-sidebar">
                     <li class={{home_active}}><a href="{%url 'home'%}">概述</a></li>
-                    <li class={{home_active}}><a href="{%url 'rooms_page'%}">房间床位</a></li>
+                    <li class={{room_active}}><a href="{%url 'rooms_page'%}">床位登记</a></li>
+                    <li ><a href="{%url 'home_client_page'%}">客户端</a></li>
                   </ul>
                 </div>
                 <!-- 主要内容 -->
-                <div class="col-sm-9 col-sm-offset-3 col-md-11 col-md-offset-1 main">
+                <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2  main">
                 {% block mod_content%}
                 
                 {%endblock%}

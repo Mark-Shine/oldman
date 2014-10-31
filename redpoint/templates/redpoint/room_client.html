@@ -3,20 +3,21 @@
 {% block mod_content%}
     {%for o in objects.values%}
 
-        <div class="col-sm-3"> 
-            <h5>床位 {{o.number}}</h5>
+        <div class="bed {{beds_class}}"> 
             <div class="thumbnail">
               {%if not o.who %}
-              <img  src="/media/avatars/photoprofile.png" >
+              <img  src="/media/avatars/photoprofile.png" class='placeholder'>
               {%else%}
-              <img  alt="..." src="  {{o.who.avatar.url}}" >
+              <img  alt="..." src="{{o.who.avatar.url}}" class='avatar'>
               <div class="caption">
                   <p>{{o.who.name}}</p>
               </div>
               {%endif%}
+              <h5>床位 {{o.number}}</h5>
             </div>
               
         </div>
+    {%endfor%}
 
 <script type="text/javascript">
     /*第一次读取最新通知*/
@@ -31,8 +32,9 @@
 /*请求函数的ajax*/
 
 function Push() {
-    location.reload()
+    // location.reload()
 }
 </script>
-{%endfor%}
+
+
 {%endblock%}

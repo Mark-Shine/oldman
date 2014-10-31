@@ -1,0 +1,45 @@
+body {
+padding-top: 0px;
+}
+
+.bed {
+	position: relative;
+  	min-height: 1px;
+  	padding-right: 15px;
+  	padding-left: 15px;
+  	float: left;
+  	margin-bottom: 5px;
+}
+.bed h5 {margin:5px auto; width: 40px;}
+.beds2 {
+    width: 50%
+}
+.beds4 {
+    width: 50%;
+}
+.beds6 {
+    width: 33.33333333%;
+}
+.thumbnail {margin-bottom: 0px;background-color:rgba(255, 255, 255, 0.7)}
+.thumbnail .caption {padding:9px;text-align:center;}
+.caption p{margin: 0;}
+.placeholder{margin:0px 0px;}
+.avatar{margin: 10px 0px;}
+
+.room-rounded .thumbnail img{
+	border-radius: 10px;
+}
+
+.room-circle .thumbnail img{
+	border-radius: 50%;
+}
+
+.room-heart .thumbnail img{
+	-webkit-mask:url("/media/avatars/cover_heart.png") round round;
+}
+.room-heart .thumbnail .placeholder{
+	-webkit-mask:none;
+}
+.room-heart .thumbnail{
+  border: none;
+}

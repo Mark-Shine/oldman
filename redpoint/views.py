@@ -29,11 +29,21 @@ from redpoint.models import Room
 from redpoint.forms import CheckInForm
 
 BASE_DIR = settings.BASE_DIR
+BED_CLASS = {"2": "beds2", "4": "beds4", "6": "beds6"}
+IMG_CLASS = {"2": "room-heart", "4":"room-rounded", "6": "room-rounded"}
 
 def home(request):
     template = 'redpoint/home.html'
-    whos = Oldman.objects.all()
-    page = render(request, template, {"whos": whos})
+    context = {}
+    beds = Bed.objects.all()
+    whos = [bed.who for bed in beds if bed.who]
+    beds_avilable = [bed for bed in beds if not bed.is_occupyied()]
+    beds_avilable_counts = len(beds_avilable) 
+    context['beds_avilable_counts'] = beds_avilable_counts
+    context['beds_occupyied_counts'] = int(beds.count() - beds_avilable_counts)
+    context["whos"] = whos
+    context['home_active'] = 'active'
+    page = render(request, template, context)
     return HttpResponse(page)
 
 
@@ -41,6 +51,8 @@ def checkin_page(request):
     template = "redpoint/checkin.html"
     bed = request.GET.get("bed")
     room = request.GET.get("room")
+    if not (room and bed):
+        return rooms_page(request)
     form = CheckInForm()
     form.fields['bed'].initial = bed
     form.fields['room'].initial = room
@@ -54,9 +66,9 @@ def do_checkin(request):
     if form.is_valid():
         image_file = save_to_local(avatar)
         bed = form.cleaned_data['bed']
-        room = form.cleaned_data['room']
-        room_q = Room.objects.get(room_number=room)
-        bed_q = Bed.objects.get(number=bed, room=room_q)
+        room_id = form.cleaned_data['room']
+        room_q = get_object_or_404(Room, id=room_id)
+        bed_q = get_object_or_404(Bed, number=bed, room=room_q)
         new_man = Oldman.objects.create(name=form.cleaned_data['name'], avatar="/media/"+image_file)
         bed_q.who = new_man
         bed_q.save()
@@ -64,6 +76,15 @@ def do_checkin(request):
     else:
         form = CheckInForm()
     return render(request, 'redpoint/checkin.html', {'form': form})
+
+
+def do_checkout(request):
+    bed = request.GET.get('bedid')
+    bed_q = Bed.objects.filter(pk=bed)
+    if bed_q:
+        bed_q[0].who = None
+        bed_q[0].save()
+    return HttpResponseRedirect("/rooms/")
 
 
 def save_to_local(data):
@@ -80,6 +101,13 @@ def rooms_page(request):
     beds = Bed.objects.all()
     context = {}
     context['objects'] = beds
+    context['occupyied_beds'] = Bed.objects.occupyied()
+    beds_avilable = [bed for bed in beds if not bed.is_occupyied()]
+    beds_avilable_counts = len(beds_avilable) 
+    context['beds_avilable_counts'] = beds_avilable_counts
+    context['beds_all_counts'] = beds.count()
+    context['rooms'] = Room.objects.all()
+    context['room_active'] = 'active'
     page = render(request, template, context)
     return HttpResponse(page)
 
@@ -96,9 +124,23 @@ from django.utils.datastructures import OrderedDict
 
 def room_client_page(request):
     room_number = request.GET.get("number")
+    floor = request.GET.get("f")
     template = "redpoint/room_client.html"
-    beds = Room.objects.get(room_number=room_number).bed_set.all()
+    room_q = get_object_or_404(Room, room_number=room_number, floor=floor)
+    beds = room_q.bed_set.all()
     beds_dict = {o.number:o for o in beds}
     od = OrderedDict(sorted(beds_dict.items(), key=lambda t: t[0]))
-    page = render(request, template, {"objects": od})
+    ##有可能取到不合适的数字
+    context = {}
+    context['beds_class'] = BED_CLASS.get(str(room_q.beds_count))
+    context['img_class'] = IMG_CLASS.get(str(room_q.beds_count))
+    # context['img_class'] = IMG_CLASS.get('1')
+    context['objects'] = od
+    page = render(request, template, context)
     return HttpResponse(page)
+
+
+
+
+
+
