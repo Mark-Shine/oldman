@@ -5,8 +5,8 @@
 {% block mod_content%}
     {%for o in obj.values%}
 
-        <div class="bed {{beds_class}}"> 
-            <div class="thumbnail">
+        <div class="col-xs-6 col-md-3"> 
+            <div class="thumbnail" style="text-align: center">
               {%if not o.who %}
               <img  src="/media/avatars/photoprofile.png" class='placeholder'>
               {%else%}

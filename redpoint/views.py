@@ -145,7 +145,7 @@ def room_client_page(request):
     ##有可能取到不合适的数字
     context = {}
     context['beds_class'] = BED_CLASS.get(str(room_q.beds_count))
-    context['img_class'] = IMG_CLASS.get(str(room_q.beds_count))
+    context['img_class'] = IMG_CLASS.get("2")
     # context['img_class'] = IMG_CLASS.get('1')
     context['objects'] = od
     page = render(request, template, context)
