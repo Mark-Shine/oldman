@@ -121,6 +121,7 @@ def room(request):
     beds_dict = {o.number:o for o in beds}
     od = OrderedDict(sorted(beds_dict.items(), key=lambda t: t[0]))
     context['obj'] = od
+    context['room'] = room_q
     page  = render(request, template, context)
     return HttpResponse(page)
 
