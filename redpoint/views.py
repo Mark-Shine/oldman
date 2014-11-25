@@ -72,7 +72,7 @@ def do_checkin(request):
         new_man = Oldman.objects.create(name=form.cleaned_data['name'], avatar="/media/"+image_file)
         bed_q.who = new_man
         bed_q.save()
-        return HttpResponseRedirect('/rooms/')
+        return HttpResponseRedirect(reverse("room")+'?id=%s' % room_id)
     else:
         form = CheckInForm()
     return render(request, 'redpoint/checkin.html', {'form': form})
@@ -111,6 +111,18 @@ def rooms_page(request):
     page = render(request, template, context)
     return HttpResponse(page)
 
+
+def room(request):
+    template = "redpoint/room.html"
+    room_id = request.GET.get("id")
+    room_q = get_object_or_404(Room, id=room_id)
+    context = {}
+    beds = room_q.bed_set.all()
+    beds_dict = {o.number:o for o in beds}
+    od = OrderedDict(sorted(beds_dict.items(), key=lambda t: t[0]))
+    context['obj'] = od
+    page  = render(request, template, context)
+    return HttpResponse(page)
 
 def home_client_page(request):
     template = "redpoint/home_client.html"

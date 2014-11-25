@@ -10,6 +10,7 @@ urlpatterns = patterns('',
     url(r'^checkout/do$', 'redpoint.views.do_checkout', name='checkout'),
     url(r'^checkin/do$', 'redpoint.views.do_checkin', name='checkin'),
     url(r'^rooms/$', 'redpoint.views.rooms_page', name='rooms_page'),
+    url(r'^room/$', 'redpoint.views.room', name='room'),
     url(r'^client/room/$', 'redpoint.views.room_client_page', name='room_client'),
     url(r'^client/home/$', 'redpoint.views.home_client_page', name='home_client_page'),
 

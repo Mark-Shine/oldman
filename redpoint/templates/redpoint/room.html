@@ -1,7 +1,9 @@
-{% extends 'client_base.html'%}
+{% extends 'base.html'%}
+{% load static %}
+{% get_static_prefix as STATIC_PREFIX %}
 
 {% block mod_content%}
-    {%for o in objects.values%}
+    {%for o in obj.values%}
 
         <div class="bed {{beds_class}}"> 
             <div class="thumbnail">
@@ -32,7 +34,7 @@
 /*请求函数的ajax*/
 
 function Push() {
-    location.reload()
+    // location.reload()
 }
 </script>
 
