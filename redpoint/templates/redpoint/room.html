@@ -1,7 +1,7 @@
 {% extends 'base.html'%}
 {% load static %}
 {% get_static_prefix as STATIC_PREFIX %}
-{% load redpoint_tags %}
+{% load redpoint_tags imagekit%}
 
 {% block mod_content%}
     <h3 class="page-header">{{room.id}} 房间 {{room.floor}}楼{{room.room_number}}室</h3>
@@ -11,10 +11,9 @@
             <div class="thumbnail" style="text-align: center">
               {%if not o.who %}
               <!-- <img  src="/media/avatars/photoprofile.png" class='placeholder'> -->
-              <img  src="{{MEDIA_URL}}{%resize_thumbnail '/media/avatars/photoprofile.png' 200 200 %}" class='placeholder'>
+              <img  src="{{MEDIA_URL}}{%resize_thumbnail '/media/avatars/photoprofile.png' 300 200 %}" class='placeholder'>
               {%else%}
-              <img  src="{{MEDIA_URL}}{%resize_thumbnail o.who.avatar 200 200 %}" class='placeholder'>
-              <!-- <img  src="{{MEDIA_URL}}{{o.who.avatar_thumbnail}}" class='avatar'> -->
+              <img  src="{{MEDIA_URL}}{%resize_thumbnail o.who.avatar 270 0 %}" class='placeholder'>
               <div class="caption">
                   <p>{{o.who.name}}</p>
               </div>

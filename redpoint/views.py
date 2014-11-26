@@ -70,7 +70,7 @@ def do_checkin(request):
         room_id = form.cleaned_data['room']
         room_q = get_object_or_404(Room, id=room_id)
         bed_q = get_object_or_404(Bed, number=bed, room=room_q)
-        new_man = Oldman.objects.create(name=form.cleaned_data['name'], avatar="/media/"+image_file)
+        new_man = Oldman.objects.create(name=form.cleaned_data['name'], avatar=image_file)
         bed_q.who = new_man
         bed_q.save()
         return HttpResponseRedirect(reverse("room")+'?id=%s' % room_id)
@@ -90,7 +90,7 @@ def do_checkout(request):
 
 def save_to_local(data):
     image = base64.b64decode(data[22:])
-    image_file = '/avatars/'+str(time.time())+".jpg"
+    image_file = '/media/avatars/'+str(time.time())+".jpg"
     name = BASE_DIR+image_file
     # with os.fdopen(os.open(name, os.O_RDWR, 777), 'wb+') as handle:
     #     handle.write(image)

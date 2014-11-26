@@ -1,4 +1,5 @@
 {% extends 'client_base.html'%}
+{% load redpoint_tags %}
 
 {% block mod_content%}
     {%for o in objects.values%}
@@ -6,9 +7,9 @@
         <div class="bed {{beds_class}}"> 
             <div class="thumbnail">
               {%if not o.who %}
-              <img  src="/media/avatars/photoprofile.png" class='placeholder'>
+              <img  src="{{MEDIA_URL}}{%resize_thumbnail '/media/avatars/photoprofile.png' 280 200 %}" class='placeholder'>
               {%else%}
-              <img  alt="..." src="{{o.who.avatar.url}}" class='avatar'>
+              <img  src="{{MEDIA_URL}}{%resize_thumbnail o.who.avatar 260 0 %}" class='avatar'>
               <div class="caption">
                   <p>{{o.who.name}}</p>
               </div>
@@ -32,7 +33,7 @@
 /*请求函数的ajax*/
 
 function Push() {
-    location.reload()
+    // location.reload()
 }
 </script>
 
