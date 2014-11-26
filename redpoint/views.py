@@ -1,5 +1,6 @@
 #encoding=utf-8
 import math
+import os
 import time
 import operator
 import datetime
@@ -69,10 +70,10 @@ def do_checkin(request):
         room_id = form.cleaned_data['room']
         room_q = get_object_or_404(Room, id=room_id)
         bed_q = get_object_or_404(Bed, number=bed, room=room_q)
-        new_man = Oldman.objects.create(name=form.cleaned_data['name'], avatar="/media/"+image_file)
+        new_man = Oldman.objects.create(name=form.cleaned_data['name'], avatar=image_file)
         bed_q.who = new_man
         bed_q.save()
-        return HttpResponseRedirect('/rooms/')
+        return HttpResponseRedirect(reverse("room")+'?id=%s' % room_id)
     else:
         form = CheckInForm()
     return render(request, 'redpoint/checkin.html', {'form': form})
@@ -89,9 +90,14 @@ def do_checkout(request):
 
 def save_to_local(data):
     image = base64.b64decode(data[22:])
-    image_file = '/avatars/'+str(time.time())+".jpg"
-    with open(BASE_DIR+image_file, "wb+") as photo:
+    image_file = '/media/avatars/'+str(time.time())+".jpg"
+    name = BASE_DIR+image_file
+    # with os.fdopen(os.open(name, os.O_RDWR, 777), 'wb+') as handle:
+    #     handle.write(image)
+    with open(name, 'wb+') as photo:
         photo.write(image)
+        os.chmod(name, 0o666)
+        ##in python3 666 is not allowed, it should begin with '0o', said by PEP 3127 
     return image_file
 
 
@@ -111,6 +117,19 @@ def rooms_page(request):
     page = render(request, template, context)
     return HttpResponse(page)
 
+
+def room(request):
+    template = "redpoint/room.html"
+    room_id = request.GET.get("id")
+    room_q = get_object_or_404(Room, id=room_id)
+    context = {}
+    beds = room_q.bed_set.all()
+    beds_dict = {o.number:o for o in beds}
+    od = OrderedDict(sorted(beds_dict.items(), key=lambda t: t[0]))
+    context['obj'] = od
+    context['room'] = room_q
+    page  = render(request, template, context)
+    return HttpResponse(page)
 
 def home_client_page(request):
     template = "redpoint/home_client.html"
@@ -133,7 +152,7 @@ def room_client_page(request):
     ##有可能取到不合适的数字
     context = {}
     context['beds_class'] = BED_CLASS.get(str(room_q.beds_count))
-    context['img_class'] = IMG_CLASS.get(str(room_q.beds_count))
+    context['img_class'] = IMG_CLASS.get("2")
     # context['img_class'] = IMG_CLASS.get('1')
     context['objects'] = od
     page = render(request, template, context)

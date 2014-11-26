@@ -1,0 +1,45 @@
+{% extends 'base.html'%}
+{% load static %}
+{% get_static_prefix as STATIC_PREFIX %}
+{% load redpoint_tags imagekit%}
+
+{% block mod_content%}
+    <h3 class="page-header">{{room.id}} 房间 {{room.floor}}楼{{room.room_number}}室</h3>
+    {%for o in obj.values%}
+
+        <div class="col-xs-6 col-md-4 col-sm-10"> 
+            <div class="thumbnail" style="text-align: center">
+              {%if not o.who %}
+              <!-- <img  src="/media/avatars/photoprofile.png" class='placeholder'> -->
+              <img  src="{{MEDIA_URL}}{%resize_thumbnail '/media/avatars/photoprofile.png' 300 200 %}" class='placeholder'>
+              {%else%}
+              <img  src="{{MEDIA_URL}}{%resize_thumbnail o.who.avatar 270 0 %}" class='placeholder'>
+              <div class="caption">
+                  <p>{{o.who.name}}</p>
+              </div>
+              {%endif%}
+              <b>床位 {{o.number}}</b>
+            </div>
+              
+        </div>
+    {%endfor%}
+
+<script type="text/javascript">
+    /*第一次读取最新通知*/
+    setTimeout(function() {
+             Push();},
+        3000);
+      /*30轮询读取函数*/
+    setInterval(function() {
+            Push();}, 
+            30000);
+
+/*请求函数的ajax*/
+
+function Push() {
+    // location.reload()
+}
+</script>
+
+
+{%endblock%}

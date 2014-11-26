@@ -1,12 +1,8 @@
 {% extends 'base.html' %}
 
 {%block mod_content%}
-<style type="text/css">
-  .thumbnail{
-    background-color: rgba(255,255,255,0.7);
-  }
-</style>
 <div class="row ">
+  <div class="col-sm-3 col-md-12">
   <h3 class="page-header">床位登记</h3>
   <ul class="list-inline">
       <li>剩余床位：{{beds_avilable_counts}}</li>
@@ -14,17 +10,21 @@
 
   </ul>
   </div>
-
+</div>
   {%for room in rooms%}
   <div class="row">
   <div class="col-sm-3 col-md-12 ">
-      <h4>房间 {{room.floor}}楼{{room.room_number}}室</h4>
-      {%for bed in room.bed_set.avalible %}
+      <h4>房间 {{room.floor}}楼{{room.room_number}}室 <a href="{%url 'room' %}?id={{room.id}}"><small>进入房间</small></a></h4>
+      {%for bed in room.bed_set.all %}
       <div class="col-sm-3 col-md-3 ">
         <div class="thumbnail">
-          <a class="center-block" href="{%url 'show_checkin'%}?bed={{bed.number}}&room={{room.id}}"><span class="glyphicon glyphicon-plus " style="font-size: 20px"></span></a>
           <div class="caption">
-          <p>床位号：{{bed.number}} </p>
+          {%if not bed.who %}
+          <a class="center-block text-center" href="{%url 'show_checkin'%}?bed={{bed.number}}&room={{room.id}}"><span class="glyphicon glyphicon-plus " style="font-size: 20px; padding-bottom: 10px"></span></a>
+          {%else%}
+          <p class="text-center">该床位已经占用</p>
+          {%endif%}
+          <p class="text-center">床位号：{{bed.number}} </p>
           </div>
         </div>
       </div>

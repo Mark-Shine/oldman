@@ -56,7 +56,17 @@ ROOT_URLCONF = 'oldman.urls'
 
 WSGI_APPLICATION = 'oldman.wsgi.application'
 
-
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "django.contrib.messages.context_processors.messages",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.static",
+    "django.core.context_processors.media",
+    "django.core.context_processors.request",
+    "django.core.context_processors.tz",
+    "redpoint.context_processors.common",
+)
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
@@ -90,7 +100,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
-MEDIA_ROOT = BASE_DIR+'/'
+MEDIA_ROOT = BASE_DIR+'/media/'
 MEDIA_URL = '/media/'
 STATIC_URL = '/static/'
 STATICFILES_DIRS = ( 
@@ -102,6 +112,6 @@ STATICFILES_DIRS = (
 
 #User Custom
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
-
+THUMBNAILS_DIR_NAME = 'thumbnails'
 
 

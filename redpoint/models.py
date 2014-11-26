@@ -55,7 +55,7 @@ class Oldman(models.Model):
     
     avatar = models.ImageField(upload_to='avatars', verbose_name=u"照片")
     avatar_thumbnail = ImageSpecField(source='avatar',
-                                      processors=[ResizeToFill(100, 50)],
+                                      processors=[ResizeToFill(200, 200)],
                                       format='JPEG',
                                       options={'quality': 60}, )
 
