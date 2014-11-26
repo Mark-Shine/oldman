@@ -1,5 +1,6 @@
 #encoding=utf-8
 import math
+import os
 import time
 import operator
 import datetime
@@ -90,8 +91,13 @@ def do_checkout(request):
 def save_to_local(data):
     image = base64.b64decode(data[22:])
     image_file = '/avatars/'+str(time.time())+".jpg"
-    with open(BASE_DIR+image_file, "wb+") as photo:
+    name = BASE_DIR+image_file
+    # with os.fdopen(os.open(name, os.O_RDWR, 777), 'wb+') as handle:
+    #     handle.write(image)
+    with open(name, 'wb+') as photo:
         photo.write(image)
+        os.chmod(name, 0o666)
+        ##in python3 666 is not allowed, it should begin with '0o', said by PEP 3127 
     return image_file
 
 
