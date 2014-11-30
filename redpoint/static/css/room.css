@@ -1,7 +1,25 @@
+html,body {
+  height: 100%;
+}
 body {
 padding-top: 0px;
 }
 
+.container-fluid {
+  height: 100%;
+  width: 100%;
+  display: table;
+}
+
+.container-fluid .row {
+  display: table-cell;
+  vertical-align: middle;
+}
+.pics:after {
+  content: " ";
+  display: table;
+  clear: both;
+}
 .bed {
 	position: relative;
   	min-height: 1px;
@@ -10,21 +28,21 @@ padding-top: 0px;
   	float: left;
   	margin-bottom: 5px;
 }
-.bed h5 {margin:5px auto; width: 40px;}
+.bed h5 {margin:5px auto; width: 60px;text-align: center;}
 .beds2 {
     width: 50%
 }
 .beds4 {
-    width: 50%;
+    width: 25%;
 }
 .beds6 {
     width: 33.33333333%;
 }
 .thumbnail {margin-bottom: 0px;background-color:rgba(255, 255, 255, 0.7)}
 .thumbnail .caption {padding:9px;text-align:center;}
-.caption p{margin: 0;}
+.thumbnail p{margin: 0;}
 .placeholder{margin:0px 0px;}
-.avatar{margin: 10px 0px;}
+.avatar{margin: 9px 0px;}
 
 .room-rounded .thumbnail img{
 	border-radius: 10px;
@@ -35,11 +53,26 @@ padding-top: 0px;
 }
 
 .room-heart .thumbnail img{
-	-webkit-mask:url("/media/avatars/cover_heart.png") round round;
+	-webkit-mask:url("/media/avatars/cover_heart2.png") round round;
 }
 .room-heart .thumbnail .placeholder{
 	-webkit-mask:none;
 }
 .room-heart .thumbnail{
   border: none;
+}
+
+.room-photo .thumbnail{
+  background-color: transparent;
+  border: none;
+}
+.room-photo .thumbnail img {
+  padding: 7px;
+  background: linear-gradient(#fff,#ccc);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+.room-photo .thumbnail p,.room-photo .thumbnail h5 {
+  font-size: 18px;
+  color: #fff;
+  text-shadow: 0 2px 3px rgba(0,0,0,0.5);
 }

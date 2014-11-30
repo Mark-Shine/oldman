@@ -1,0 +1,17 @@
+{% load redpoint_tags %}
+{%for o in objects.values%} 
+    <div class="bed {{beds_class}}"> 
+        <div class="thumbnail">
+          {%if not o.who %}
+          <img style="height: 200px">
+          {%else%}
+          <img src="{{MEDIA_URL}}{%resize_thumbnail o.who.avatar 260 0 %}" class='avatar'>
+          <div class="caption">
+              <p>{{o.who.name}}</p>
+          </div>
+          {%endif%}
+          <h5>床位 {{o.number}}</h5>
+        </div>
+          
+    </div>
+{%endfor%} 

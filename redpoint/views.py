@@ -5,6 +5,7 @@ import time
 import operator
 import datetime
 import base64
+import json
 from io import BytesIO
 
 from django.shortcuts import render, get_object_or_404
@@ -31,7 +32,7 @@ from redpoint.forms import CheckInForm
 
 BASE_DIR = settings.BASE_DIR
 BED_CLASS = {"2": "beds2", "4": "beds4", "6": "beds6"}
-IMG_CLASS = {"2": "room-heart", "4":"room-rounded", "6": "room-rounded"}
+IMG_CLASS = {"2": "room-heart", "4":"room-rounded", "6": "room-rounded","8":"room-photo"}
 
 def home(request):
     template = 'redpoint/home.html'
@@ -144,7 +145,7 @@ from django.utils.datastructures import OrderedDict
 def room_client_page(request):
     room_number = request.GET.get("number")
     floor = request.GET.get("f")
-    template = "redpoint/room_client.html"
+    template = "client/room_heart.html"
     room_q = get_object_or_404(Room, room_number=room_number, floor=floor)
     beds = room_q.bed_set.all()
     beds_dict = {o.number:o for o in beds}
@@ -155,11 +156,27 @@ def room_client_page(request):
     context['img_class'] = IMG_CLASS.get("2")
     # context['img_class'] = IMG_CLASS.get('1')
     context['objects'] = od
+    context['ajax_url'] = reverse('ajax_photo') + '?number=%s&f=%s' %(room_number, floor)
     page = render(request, template, context)
     return HttpResponse(page)
 
 
-
-
-
+def ajax_get_photo(request):
+    room_number = request.GET.get("number")
+    floor = request.GET.get("f")
+    template = "client/piece_photo.html"
+    room_q = get_object_or_404(Room, room_number=room_number, floor=floor)
+    beds = room_q.bed_set.all()
+    beds_dict = {o.number:o for o in beds}
+    od = OrderedDict(sorted(beds_dict.items(), key=lambda t: t[0]))
+    ##有可能取到不合适的数字
+    context = {}
+    context['objects'] = od
+    context['beds_class'] = BED_CLASS.get(str(room_q.beds_count))
+    context['img_class'] = IMG_CLASS.get("2")
+    # context['ajax_url'] = reverse('ajax_photo') + '?number=%s&f=%s' %(room_number, floor)
+    # page = render_to_string(template, context)
+    page = render(request, template, context)
+    # page_str = json.dumps(page)
+    return HttpResponse(page)
 
