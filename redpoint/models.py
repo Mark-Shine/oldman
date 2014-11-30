@@ -47,6 +47,9 @@ class Room(models.Model):
         self.add_beds()
 
 
+class Client(models.Model):
+    img_class = models.IntegerField(null=True, blank=True,)
+    bed_class = models.IntegerField(null=True, blank=True,)
 
 
 class Oldman(models.Model):

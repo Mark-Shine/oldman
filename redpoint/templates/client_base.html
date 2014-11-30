@@ -8,21 +8,16 @@
     <title>住房管理</title>
     <link href="{{STATIC_PREFIX}}bootstrap-3.2.0-dist/css/bootstrap.css" rel="stylesheet">
     <link href="{{STATIC_PREFIX}}bootstrap-3.2.0-dist/css/dashboard.css" rel="stylesheet">
-
-    <link rel="stylesheet" type="text/css" href="{{STATIC_PREFIX}}css/room.css">
     
     <script src="{{STATIC_PREFIX}}holder.js"></script>
     <script src="{{STATIC_PREFIX}}jquery/jquery.js"></script>
     <script src="{{STATIC_PREFIX}}bootstrap-3.2.0-dist/js/bootstrap.js"></script>
 
-    <style type="text/css">
-        .nav-sidebar > .active > a:hover{background-color:#3276b1}
-        .snav li{padding-left:15px;}
-        .snav li a{font-size:12px;}
-        body {
-            background: url('{{STATIC_PREFIX}}img/sea_1680x1050.jpg') center;
-        }
-    </style>
+    
+
+    {%block extra_head %}
+
+    {%endblock%}
 </head>
 
 <body >
@@ -31,7 +26,7 @@
                 <!-- 主要内容 -->
                 <div class="col-sm-12  col-md-12 main  {{img_class}}">
                 {% block mod_content%}
-
+                
                 {%endblock%}
                 </div>  
             </div>

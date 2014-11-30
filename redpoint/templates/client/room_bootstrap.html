@@ -1,0 +1,41 @@
+{% extends 'client_base.html'%}
+{% load redpoint_tags %}
+
+{%block extra_head%}
+<style type="text/css">
+    body {padding-top: 0px;}
+</style>
+{%endblock%}
+
+{% block mod_content%}
+    {%for o in objects.values%}
+        <div class="col-lg-6 col-md-4 col-xs-6 " >
+          <a class="thumbnail" href="#" style="margin-bottom: 5px">
+                {%if o.who.avatar %}
+                <img class="img-responsive" src="{{MEDIA_URL}}{%resize_thumbnail o.who.avatar 545 280 %}">
+                {%else%}
+                <img class="img-responsive" style="height: 280px">
+                {%endif%}
+            </a>
+        </div>
+    {%endfor%}
+
+<script type="text/javascript">
+    /*第一次读取最新通知*/
+    setTimeout(function() {
+             Push();},
+        3000);
+      /*30轮询读取函数*/
+    setInterval(function() {
+            Push();}, 
+            30000);
+
+/*请求函数的ajax*/
+
+function Push() {
+    // location.reload()
+}
+</script>
+
+
+{%endblock%}

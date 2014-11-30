@@ -1,0 +1,62 @@
+{% extends 'client_base.html'%}
+{% load redpoint_tags %}
+{% load static %}
+
+{%block extra_head%}
+    <link rel="stylesheet" type="text/css" href="{%static 'css/room.css'%}">
+    <style type="text/css">
+        .nav-sidebar > .active > a:hover{background-color:#3276b1}
+        .snav li{padding-left:15px;}
+        .snav li a{font-size:12px;}
+        body {
+            background: url('{%static 'img/sea_1680x1050.jpg'%} ') center;
+        }
+    </style>
+
+{%endblock%}
+
+{% block mod_content%}
+  <div id="pics">
+    {%for o in objects.values%}
+
+        <div class="bed {{beds_class}}"> 
+            <div class="thumbnail">
+              {%if not o.who %}
+              <img style="height: 200px">
+              {%else%}
+              <img src="{{MEDIA_URL}}{%resize_thumbnail o.who.avatar 260 0 %}" class='avatar'>
+              <div class="caption">
+                  <p>{{o.who.name}}</p>
+              </div>
+              {%endif%}
+              <h5>床位 {{o.number}}</h5>
+            </div>
+              
+        </div>
+    {%endfor%}
+</div>
+<script type="text/javascript">
+    /*第一次读取最新通知*/
+    setTimeout(function() {
+             Push();},
+        3000);
+      /*30轮询读取函数*/
+    setInterval(function() {
+            Push();}, 
+            30000);
+
+/*请求函数的ajax*/
+
+function Push() {
+      $.ajax({
+          type: "GET",
+          url: "{{ajax_url}}",
+          success: function(data) {
+            $("#pics").html(data)
+          }
+      });
+    
+}
+</script>
+
+{%endblock%}
