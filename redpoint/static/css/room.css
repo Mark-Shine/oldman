@@ -9,13 +9,19 @@ padding-top: 0px;
   height: 100%;
   width: 100%;
   display: table;
+  padding: 0;
 }
 
 .container-fluid .row {
   display: table-cell;
   vertical-align: middle;
 }
-.pics:after {
+
+.main {
+  padding: 0;
+}
+
+#pics:after {
   content: " ";
   display: table;
   clear: both;
@@ -23,8 +29,8 @@ padding-top: 0px;
 .bed {
 	position: relative;
   	min-height: 1px;
-  	padding-right: 15px;
-  	padding-left: 15px;
+/*  	padding-right: 15px;
+  	padding-left: 15px;*/
   	float: left;
   	margin-bottom: 5px;
 }
@@ -53,7 +59,8 @@ padding-top: 0px;
 }
 
 .room-heart .thumbnail img{
-	-webkit-mask:url("/media/avatars/cover_heart2.png") round round;
+	-webkit-mask:url("/media/avatars/cover_heart2.png") round round ;
+  -webkit-mask-size: 100% 100%;
 }
 .room-heart .thumbnail .placeholder{
 	-webkit-mask:none;
@@ -65,14 +72,17 @@ padding-top: 0px;
 .room-photo .thumbnail{
   background-color: transparent;
   border: none;
+  padding: 0;
 }
 .room-photo .thumbnail img {
   padding: 7px;
-  background: linear-gradient(#fff,#ccc);
+  background: #fff;
   box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  /*margin-left: 0px;
+  margin-right: 0px;*/
 }
 .room-photo .thumbnail p,.room-photo .thumbnail h5 {
-  font-size: 18px;
+  font-size: 20px;
   color: #fff;
   text-shadow: 0 2px 3px rgba(0,0,0,0.5);
 }

@@ -153,8 +153,7 @@ def room_client_page(request):
     ##有可能取到不合适的数字
     context = {}
     context['beds_class'] = BED_CLASS.get(str(room_q.beds_count))
-    context['img_class'] = IMG_CLASS.get("2")
-    # context['img_class'] = IMG_CLASS.get('1')
+    context['img_class'] = IMG_CLASS.get("8")
     context['objects'] = od
     context['ajax_url'] = reverse('ajax_photo') + '?number=%s&f=%s' %(room_number, floor)
     page = render(request, template, context)
@@ -173,10 +172,7 @@ def ajax_get_photo(request):
     context = {}
     context['objects'] = od
     context['beds_class'] = BED_CLASS.get(str(room_q.beds_count))
-    context['img_class'] = IMG_CLASS.get("2")
-    # context['ajax_url'] = reverse('ajax_photo') + '?number=%s&f=%s' %(room_number, floor)
-    # page = render_to_string(template, context)
+    context['img_class'] = IMG_CLASS.get("8")
     page = render(request, template, context)
-    # page_str = json.dumps(page)
     return HttpResponse(page)
 
