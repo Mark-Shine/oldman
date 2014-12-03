@@ -23,12 +23,15 @@ from django.contrib.auth.decorators import permission_required
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.contrib.messages import info, success
 from django.conf import settings 
+
 
 from redpoint.models import Oldman
 from redpoint.models import Bed
 from redpoint.models import Room
-from redpoint.forms import CheckInForm
+from redpoint.models import Messages
+from redpoint.forms import CheckInForm, MessagesForm
 
 BASE_DIR = settings.BASE_DIR
 BED_CLASS = {"2": "beds2", "4": "beds4", "6": "beds6"}
@@ -173,6 +176,40 @@ def ajax_get_photo(request):
     context['objects'] = od
     context['beds_class'] = BED_CLASS.get(str(room_q.beds_count))
     context['img_class'] = IMG_CLASS.get("8")
+    context['message'] = show_message()
     page = render(request, template, context)
     return HttpResponse(page)
+
+
+def messages_page(request):
+    template = "redpoint/messages.html"
+    form = MessagesForm()
+    page = render(request, template, {"form": form,})
+    return HttpResponse(page)
+
+
+def add_message(request):
+    ms_form = MessagesForm(request.POST)
+    if ms_form.is_valid():
+        data = ms_form.cleaned_data
+        Messages.objects.create(**data)
+        success(request, u"操作成功！")
+        return HttpResponseRedirect(reverse("messages"))
+    else:
+        info(request, u"发生错误，请检查后重新提交")
+        return HttpResponseRedirect(reverse("messages"))
+
+def show_message():
+    worktime = 30
+    ms_object = Messages.objects.last()
+    now = timezone.now()
+    end_time = ms_object.create + datetime.timedelta(seconds=worktime)
+    msg = ms_object.payload
+    if now > end_time:
+        msg = ''
+    return msg 
+
+
+
+
 

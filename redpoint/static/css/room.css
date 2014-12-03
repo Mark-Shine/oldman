@@ -48,7 +48,7 @@ padding-top: 0px;
 .thumbnail .caption {padding:9px;text-align:center;}
 .thumbnail p{margin: 0;}
 .placeholder{margin:0px 0px;}
-.avatar{margin: 9px 0px;}
+.avatar{margin: 0px 0px;}
 
 .room-rounded .thumbnail img{
 	border-radius: 10px;
@@ -78,9 +78,9 @@ padding-top: 0px;
   padding: 7px;
   background: #fff;
   box-shadow: 0 2px 4px rgba(0,0,0,0.5);
-  /*margin-left: 0px;
-  margin-right: 0px;*/
+  width: 98%;
 }
+
 .room-photo .thumbnail p,.room-photo .thumbnail h5 {
   font-size: 20px;
   color: #fff;

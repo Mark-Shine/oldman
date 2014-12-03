@@ -1,11 +1,17 @@
 {% load redpoint_tags %}
+  {%if message%}
+  <div class="well">{{message}}</div>
+  {%endif%}
 {%for o in objects.values%} 
     <div class="bed {{beds_class}}"> 
         <div class="thumbnail">
           {%if not o.who %}
-          <img style="height: 200px">
+          <img src="{{MEDIA_URL}}avatars/photonone.png">
+          <div class="caption">
+              <p>无</p>
+          </div>
           {%else%}
-          <img src="{{MEDIA_URL}}{%resize_thumbnail o.who.avatar 300 0 %}" class='avatar'>
+          <img src="{{MEDIA_URL}}{%resize_thumbnail o.who.avatar 400 0 %}" class='avatar'>
           <div class="caption">
               <p>{{o.who.name}}</p>
           </div>
