@@ -208,7 +208,7 @@ def add_message(request):
         return HttpResponseRedirect(reverse("messages"))
 
 def show_message():
-    worktime = 1200
+    worktime = 6000
     ms_object = Messages.objects.last()
     now = timezone.now()
     end_time = ms_object.create + datetime.timedelta(seconds=worktime)

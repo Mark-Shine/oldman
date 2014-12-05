@@ -1,4 +1,34 @@
 {% extends 'base.html' %}
+{%block extra %}
+<style type="text/css">
+.bed-container {
+  border: 1px solid #ddd;
+  border-radius: 4px; 
+  padding: 4px;line-height: 1.42857143;
+  margin-bottom: 15px;
+}
+.bed-container .thumbnail {
+  padding: 0px;
+  border:none;
+  width:100%;
+  overflow: hidden;
+  border-radius: 0px;
+  height: 199px;
+  margin-bottom: 10px;
+}
+.bed-container .thumbnail img {
+  width: 100%;
+  height: 100%;
+}
+.bed-container .caption {
+  padding:9px;
+  color:#000;
+}
+.bed-container .caption p:last-child {
+  margin-bottom: 0px;
+}
+</style>
+{%endblock%}
 
 {%block mod_content%}
 <div class="row ">
@@ -40,14 +70,15 @@
 
    {%for bed in occupyied_beds%}
       {%if bed.who %}
-      <div class="col-sm-3 col-md-3 ">
-        <div class="thumbnail">
-          <img  alt="..." src="{{bed.who.avatar.url}}" >
-          <div class="caption">
-          <p>房间号：{{bed.room.floor}}-{{bed.room.room_number}}</p>
-          <p>床位号：{{bed.number}} <a style="font-size: 14px"class="pull-right" href="{%url 'checkout'%}?bedid={{bed.id}}">退房</a></p>
+      <div class="col-sm-3 col-md-3 " >
+        <div class="bed-container">
+          <div class="thumbnail">
+            <img  alt="..." src="{{bed.who.avatar.url}}" >
           </div>
-
+          <div class="caption">
+            <p>房间号：{{bed.room.floor}}-{{bed.room.room_number}}</p>
+            <p>床位号：{{bed.number}} <a style="font-size: 14px"class="pull-right" href="{%url 'checkout'%}?bedid={{bed.id}}">退房</a></p>
+          </div>
         </div>
       </div>
     {%endif%}
