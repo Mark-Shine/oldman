@@ -89,7 +89,8 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+# TIME_ZONE = 'UTC'
+TIME_ZONE='Asia/Shanghai'
 
 USE_I18N = True
 
@@ -113,5 +114,4 @@ STATICFILES_DIRS = (
 #User Custom
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 THUMBNAILS_DIR_NAME = 'thumbnails'
-
 

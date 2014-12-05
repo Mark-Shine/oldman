@@ -7,6 +7,7 @@ import datetime
 import base64
 import json
 from io import BytesIO
+from PIL import Image, ImageOps
 
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
@@ -68,11 +69,15 @@ import time
 def do_checkin(request):
     avatar = request.POST.get("avatar", "")
     form = CheckInForm(request.POST)
+    do_crop = False
     if form.is_valid():
-        image_file = save_to_local(avatar)
-        bed = form.cleaned_data['bed']
         room_id = form.cleaned_data['room']
         room_q = get_object_or_404(Room, id=room_id)
+        if room_q.beds_count == 4:
+            do_crop = True
+        image_file = save_to_local(avatar, crop=do_crop)
+        bed = form.cleaned_data['bed']
+        
         bed_q = get_object_or_404(Bed, number=bed, room=room_q)
         new_man = Oldman.objects.create(name=form.cleaned_data['name'], avatar=image_file)
         bed_q.who = new_man
@@ -92,17 +97,20 @@ def do_checkout(request):
     return HttpResponseRedirect("/rooms/")
 
 
-def save_to_local(data):
-    image = base64.b64decode(data[22:])
-    image_file = '/media/avatars/'+str(time.time())+".jpg"
-    name = BASE_DIR+image_file
-    # with os.fdopen(os.open(name, os.O_RDWR, 777), 'wb+') as handle:
-    #     handle.write(image)
-    with open(name, 'wb+') as photo:
+def save_to_local(data, crop=True):
+    _, b64data = data.split(',')
+    image = base64.b64decode(b64data)
+    now = time.time()
+    image_file = '/media/avatars/'+str(now)+".jpg"
+    dst_img_name = '/media/avatars/'+str(now)+"__160X250.jpg"
+    dst_img = BASE_DIR + dst_img_name
+    with open(dst_img, 'wb+') as photo:
         photo.write(image)
-        os.chmod(name, 0o666)
+        os.chmod(dst_img, 0o666)
+        if crop:
+            _crop(ori_img=dst_img, dst_img=dst_img, dst_w=160, dst_h=300)
         ##in python3 666 is not allowed, it should begin with '0o', said by PEP 3127 
-    return image_file
+    return dst_img_name
 
 
 def rooms_page(request):
@@ -200,7 +208,7 @@ def add_message(request):
         return HttpResponseRedirect(reverse("messages"))
 
 def show_message():
-    worktime = 30
+    worktime = 1200
     ms_object = Messages.objects.last()
     now = timezone.now()
     end_time = ms_object.create + datetime.timedelta(seconds=worktime)
@@ -210,6 +218,61 @@ def show_message():
     return msg 
 
 
+def _crop(**args):
+    args_key = {'ori_img':'','dst_img':'','dst_w':'','dst_h':'','save_q':75}
+    arg = {}
+    for key in args_key:
+        if key in args:
+            arg[key] = args[key]
+        
+    im = Image.open(arg['ori_img'])
+    # ori_w,ori_h = im.size
+    imagefit = ImageOps.fit(im, (arg['dst_w'], arg['dst_h']), Image.ANTIALIAS, centering=(0.5,0))
+    imagefit.save(arg['dst_img'], 'JPEG', quality=75)
+    # return dst_img
 
+
+def clipResizeImg(**args):
+    
+    args_key = {'ori_img':'','dst_img':'','dst_w':'','dst_h':'','save_q':75}
+    arg = {}
+    for key in args_key:
+        if key in args:
+            arg[key] = args[key]
+        
+    im = Image.open(arg['ori_img'])
+    ori_w,ori_h = im.size
+ 
+    dst_scale = float(arg['dst_h']) / arg['dst_w'] #目标高宽比
+    ori_scale = float(ori_h) / ori_w #原高宽比
+ 
+    if ori_scale >= dst_scale:
+        #过高
+        width = ori_w
+        height = int(width*dst_scale)
+ 
+        x = 0
+        y = (ori_h - height) / 3
+        
+    else:
+        #过宽
+        height = ori_h
+        width = int(height*dst_scale)
+ 
+        x = (ori_w - width) / 2
+        y = 0
+ 
+    #裁剪
+    box = (x,y,width+x,height+y)
+    #这里的参数可以这么认为：从某图的(x,y)坐标开始截，截到(width+x,height+y)坐标
+    #所包围的图像，crop方法与php中的Imagecopy方法大为不一样
+    newIm = im.crop(box)
+    im = None
+ 
+    #压缩
+    ratio = float(arg['dst_w']) / width
+    newWidth = int(width * ratio)
+    newHeight = int(height * ratio)
+    newIm.resize((newWidth,newHeight),Image.ANTIALIAS).save(arg['dst_img'],quality=arg['save_q'])
 
 

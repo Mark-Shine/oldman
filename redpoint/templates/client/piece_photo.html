@@ -1,23 +1,28 @@
 {% load redpoint_tags %}
   {%if message%}
-  <div class="well">{{message}}</div>
+  <div class="msg">{{message}}</div>
   {%endif%}
 {%for o in objects.values%} 
     <div class="bed {{beds_class}}"> 
         <div class="thumbnail">
           {%if not o.who %}
           <img src="{{MEDIA_URL}}avatars/photonone.png">
-          <div class="caption">
-              <p>无</p>
-          </div>
           {%else%}
+          {%if beds_class == '2'%}
           <img src="{{MEDIA_URL}}{%resize_thumbnail o.who.avatar 400 0 %}" class='avatar'>
-          <div class="caption">
-              <p>{{o.who.name}}</p>
-          </div>
+          {%else%}
+          <img src="{{MEDIA_URL}}{%resize_thumbnail o.who.avatar 320 0 %}" class='avatar'>
           {%endif%}
-          <h5>床位 {{o.number}}</h5>
+
+          {%endif%} 
         </div>
-          
+        <div class="caption">
+        {%if not o.who %}
+          <p>无</p>
+        {%else%}
+          <p>{{o.who.name}}</p>
+        {%endif%}
+        </div>
+        <h5>床位 {{o.number}}</h5> 
     </div>
 {%endfor%} 

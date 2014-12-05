@@ -14,6 +14,8 @@ urlpatterns = patterns('',
     url(r'^client/room/$', 'redpoint.views.room_client_page', name='room_client'),
     url(r'^client/home/$', 'redpoint.views.home_client_page', name='home_client_page'),
     url(r'^client/ajax/photo$', 'redpoint.views.ajax_get_photo', name='ajax_photo'),
+    url(r'^messages/$', 'redpoint.views.messages_page', name='messages'),
+    url(r'^messages/add$', 'redpoint.views.add_message', name='add_message'),
 
     # url(r'^blog/', include('blog.urls')),
     # (r'^photologue/', include('photologue.urls')),
