@@ -9,24 +9,53 @@ padding-top: 0px;
   height: 100%;
   width: 100%;
   display: table;
+  padding: 0;
 }
 
 .container-fluid .row {
   display: table-cell;
   vertical-align: middle;
 }
-.pics:after {
+
+.main {
+  padding: 0;
+}
+
+#pics {
+  position: relative;
+}
+#pics:after {
   content: " ";
   display: table;
   clear: both;
 }
+
+.msg {
+  position: absolute;
+  z-index: 30;
+  margin:auto;
+  top: 50%; left: 50%;  
+  -webkit-transform: translate(-50%,-50%);  
+      -ms-transform: translate(-50%,-50%);  
+          transform: translate(-50%,-50%);  
+  width: 100%;
+  line-height: 40px;
+  max-height: 50%;
+  text-align: center;
+  color: #fff;
+  background-color: rgba(0,0,0,0.5);
+  padding: 25px;
+  font-size: 30px;
+  word-break:break-all;
+}
+
 .bed {
 	position: relative;
   	min-height: 1px;
-  	padding-right: 15px;
-  	padding-left: 15px;
+/*  	padding-right: 15px;
+  	padding-left: 15px;*/
   	float: left;
-  	margin-bottom: 5px;
+  	/*margin-bottom: 5px;*/
 }
 .bed h5 {margin:5px auto; width: 60px;text-align: center;}
 .beds2 {
@@ -42,7 +71,7 @@ padding-top: 0px;
 .thumbnail .caption {padding:9px;text-align:center;}
 .thumbnail p{margin: 0;}
 .placeholder{margin:0px 0px;}
-.avatar{margin: 9px 0px;}
+.avatar{margin: 0px 0px;}
 
 .room-rounded .thumbnail img{
 	border-radius: 10px;
@@ -53,7 +82,8 @@ padding-top: 0px;
 }
 
 .room-heart .thumbnail img{
-	-webkit-mask:url("/media/avatars/cover_heart2.png") round round;
+	-webkit-mask:url("/media/avatars/cover_heart2.png") round round ;
+  -webkit-mask-size: 100% 100%;
 }
 .room-heart .thumbnail .placeholder{
 	-webkit-mask:none;
@@ -62,17 +92,27 @@ padding-top: 0px;
   border: none;
 }
 
-.room-photo .thumbnail{
+.room-photo .thumbnail {
+  /*box-shadow: 0 2px 4px rgba(0,0,0,0.5);*/
+  box-shadow:0 1px 5px rgba(0,0,0,.85),inset 0 0 1px rgba(255,255,255,.35);
+  border-radius: 10px;
+  width: 98%;
+  height: 485px;
+  overflow: hidden;
   background-color: transparent;
-  border: none;
+  padding: 0;
+  border:none;
+  margin: 0px auto 5px auto;
 }
+
 .room-photo .thumbnail img {
-  padding: 7px;
-  background: linear-gradient(#fff,#ccc);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  height: 100%;
+  width: 100%;
 }
-.room-photo .thumbnail p,.room-photo .thumbnail h5 {
-  font-size: 18px;
+
+.room-photo .bed p,.room-photo .bed h5 {
+  text-align: center;
+  font-size: 20px;
   color: #fff;
   text-shadow: 0 2px 3px rgba(0,0,0,0.5);
 }

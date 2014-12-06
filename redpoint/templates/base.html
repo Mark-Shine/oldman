@@ -19,6 +19,9 @@
       color: #ddd;
     }
     </style>
+    {%block extra %}
+    
+    {%endblock%}
 </head>
 
 <body >
@@ -38,18 +41,35 @@
         </div>
     <div class="container-fluid">
           <div class="row">
+            
+
                 <!-- 边栏 -->
                 <div class="col-sm-3 col-md-2 sidebar">
                   <ul class="nav nav-sidebar">
                     <li class={{home_active}}><a href="{%url 'home'%}">概述</a></li>
                     <li class={{room_active}}><a href="{%url 'rooms_page'%}">床位登记</a></li>
+                    <li class=""><a href="{%url 'messages'%}">消息</a></li>
                     <li ><a href="{%url 'home_client_page'%}">客户端</a></li>
                   </ul>
                 </div>
                 <!-- 主要内容 -->
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2  main">
+                {%block tips%}
+                    {% if messages %}
+                        <div class="messages ">
+                        {% for message in messages %}
+                            <div class="message">
+                            <div class="alert alert-{{ message.tags }}" data-alert="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                {{ message }}
+                            </div>
+                            </div>
+                        {% endfor %}
+                        </div>
+                    {% endif %}
+                {%endblock%}
                 {% block mod_content%}
-                
+                    
                 {%endblock%}
                 </div>  
             </div>

@@ -47,11 +47,6 @@ class Room(models.Model):
         self.add_beds()
 
 
-class Client(models.Model):
-    img_class = models.IntegerField(null=True, blank=True,)
-    bed_class = models.IntegerField(null=True, blank=True,)
-
-
 class Oldman(models.Model):
     name = models.CharField(max_length=16, null=True, blank=True, verbose_name=u"姓名")
     time = models.DateTimeField(blank=True, null=True)
@@ -64,3 +59,10 @@ class Oldman(models.Model):
 
     def __str__(self, ):
         return u"%s" % self.name
+
+class Messages(models.Model):
+    payload = models.TextField(null=True, blank=True)
+    create = models.DateTimeField(blank=True, null=True, auto_now_add=True)
+    start_t = models.TimeField(blank=True, null=True, )
+    end_t = models.TimeField(blank=True, null=True,)
+
