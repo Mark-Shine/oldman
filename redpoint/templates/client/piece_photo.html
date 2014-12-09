@@ -4,25 +4,37 @@
   {%endif%}
 {%for o in objects.values%} 
     <div class="bed {{beds_class}}"> 
-        <div class="thumbnail">
           {%if not o.who %}
-          <img src="{{MEDIA_URL}}avatars/photonone.png">
+          <div class="thumbnail">
+            <!-- <img src="{{MEDIA_URL}}avatars/photonone.png"> -->
+            <p>欢迎入住</p>
+          </div>
           {%else%}
-          {%if beds_class == '2'%}
-          <img src="{{MEDIA_URL}}{%resize_thumbnail o.who.avatar 400 0 %}" class='avatar'>
-          {%else%}
-          <img src="{{MEDIA_URL}}{%resize_thumbnail o.who.avatar 320 0 %}" class='avatar'>
+            {%if beds_class == '2'%}
+          <div class="thumbnail">
+            <img src="{{MEDIA_URL}}{%resize_thumbnail o.who.avatar 400 0 %}" class='avatar' alt="{{beds_class}}">
+          </div>
+            {%else%}
+              {%if beds_class == '4'%}
+              <div class="thumbnail">
+                <img src="{{MEDIA_URL}}{%resize_thumbnail o.who.avatar 320 0 %}" class='avatar' alt="{{beds_class}}">  
+              </div>
+              {%else%}
+              <div class="thumbnail">
+                    <img src="{{MEDIA_URL}}{%resize_thumbnail o.who.avatar 320 0 %}" class='avatar'alt="{{beds_class}}"> 
+              </div>
+              {%endif%}
           {%endif%}
 
           {%endif%} 
-        </div>
         <div class="caption">
         {%if not o.who %}
           <p>无</p>
+        <h5>床位 {{o.number}}</h5> 
         {%else%}
           <p>{{o.who.name}}</p>
+        <h5>床位 {{o.number}}</h5> 
         {%endif%}
         </div>
-        <h5>床位 {{o.number}}</h5> 
     </div>
 {%endfor%} 
