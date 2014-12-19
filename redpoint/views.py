@@ -151,6 +151,7 @@ def home_client_page(request):
     page = render(request, template, context)
     return HttpResponse(page)
 
+import random
 from django.utils.datastructures import OrderedDict
 
 def room_client_page(request):
@@ -166,6 +167,7 @@ def room_client_page(request):
     context['beds_class'] = BED_CLASS.get(str(room_q.beds_count))
     context['img_class'] = IMG_CLASS.get("8")
     context['objects'] = od
+    context['order_img'] = random.randrange(1,9)
     context['ajax_url'] = reverse('ajax_photo') + '?number=%s&f=%s' %(room_number, floor)
     page = render(request, template, context)
     return HttpResponse(page)
@@ -185,6 +187,7 @@ def ajax_get_photo(request):
     context['beds_class'] = BED_CLASS.get(str(room_q.beds_count))
     context['img_class'] = IMG_CLASS.get("8")
     context['message'] = show_message()
+    context['order_img'] = random.randrange(1,9)
     page = render(request, template, context)
     return HttpResponse(page)
 

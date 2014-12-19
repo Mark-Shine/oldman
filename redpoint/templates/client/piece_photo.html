@@ -1,3 +1,6 @@
+{% load static %}
+{% get_static_prefix as STATIC_PREFIX %}
+
 {% load redpoint_tags %}
   {%if message%}
   <div class="msg">{{message}}</div>
@@ -5,9 +8,9 @@
 {%for o in objects.values%} 
     <div class="bed {{beds_class}}"> 
           {%if not o.who %}
-          <div class="thumbnail">
+          <div class="thumbnail" style="background: url({{STATIC_PREFIX}}img/default/{{order_img}}.jpg) round round;">
             <!-- <img src="{{MEDIA_URL}}avatars/photonone.png"> -->
-            <p>欢迎入住</p>
+            <!-- <p>欢迎入住</p> -->
           </div>
           {%else%}
             {%if beds_class == '2'%}
